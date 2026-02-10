@@ -8,7 +8,7 @@ W3_ZERO = 0
 W3_FIVE = 5
 W3_TEN = 10
 
-PARAMETER_ERROR = "Usage: python3 enigma.py -c <confid_file> -i <input_file> -o <output_file>"
+PARAMETER_ERROR = "Usage: python3 enigma.py -c <config_file> -i <input_file> -o <output_file>"
 RUNTIME_ERROR = "The enigma script has encountered an error"
 
 # custom exception for JSON file reading errors
@@ -110,16 +110,16 @@ def main():
         input_file = None
         output_file = None
         # parse flags
-        i = 1
+        i = 0
         while i < len(args):
             if args[i] == '-c':
-                config_file = sys.argv[i + 1]
+                config_file = argv[i + 1]
                 i += 2
             elif args[i] == '-i':
-                input_file = sys.argv[i + 1]
+                input_file = argv[i + 1]
                 i += 2
             elif args[i] == '-o':
-                output_file = sys.argv[i + 1]
+                output_file = argv[i + 1]
                 i += 2
             else:
                 print(PARAMETER_ERROR)
@@ -129,7 +129,7 @@ def main():
             print(PARAMETER_ERROR)
             sys.exit(1)
         # load enigma configuration
-        enigma = load_enigma_from_path(input_file)
+        enigma = load_enigma_from_path(config_file)
         # read input messages
         with open(input_file, 'r') as f:
             messages = f.readlines()
