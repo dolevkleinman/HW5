@@ -48,7 +48,7 @@ class Enigma:
 
     def encrypt_char(self, character):
         w1, w2, w3 = self.wheels
-        # step 1: initialize i with has value of char
+        # step 1: initialize i with hash value of char
         i = self.hash_map[character]
         # step 2: add wheel offset if not zero
         offset = ((2 * w1) - w2 + w3) % ALPHABET_SIZE
@@ -76,7 +76,7 @@ class Enigma:
         return c3
 
     def advance_wheels(self):
-            # wheel 1: advance by 1, wrap to 1 if bigger then 8
+        # wheel 1: advance by 1, wrap to 1 if bigger then 8
         self.wheels[0] += 1
         if self.wheels[0] > W1_MAX:
             self.wheels[0] = W1_MIN
@@ -113,13 +113,13 @@ def main():
         i = 0
         while i < len(args):
             if args[i] == '-c':
-                config_file = argv[i + 1]
+                config_file = args[i + 1]
                 i += 2
             elif args[i] == '-i':
-                input_file = argv[i + 1]
+                input_file = args[i + 1]
                 i += 2
             elif args[i] == '-o':
-                output_file = argv[i + 1]
+                output_file = args[i + 1]
                 i += 2
             else:
                 print(PARAMETER_ERROR)
@@ -140,7 +140,7 @@ def main():
             encrypted = enigma.encrypt(message.rstrip('\n'))
             encrypted_messages.append(encrypted)
         # output encrypted messages
-        if output_file:
+        if output_file is not None:
             with open(output_file, 'w') as f:
                 for msg in encrypted_messages:
                     f.write(msg + '\n')
